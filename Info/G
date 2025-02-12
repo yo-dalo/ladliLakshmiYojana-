@@ -1,0 +1,64 @@
+# Nginx configuration for Admin, Backend, and Client
+worker_processes auto;
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout 65;
+
+    # Server for Admin
+    server {
+        listen 80;
+        server_name admin.example.com;
+
+        root /var/www/admin; # Path to the admin directory
+        index index.html index.htm;
+
+        location / {
+            try_files $uri /index.html;
+        }
+
+        error_page 404 /404.html;
+        location = /404.html {
+            root /var/www/admin; # Path to 404 page for admin
+        }
+    }
+
+    # Server for Backend (API)
+    server {
+        listen 80;
+        server_name backend.example.com;
+
+        location / {
+            proxy_pass http://127.0.0.1:8080; # Backend service port
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+    }
+
+    # Server for Client
+    server {
+        listen 80;
+        server_name client.example.com;
+
+        root /var/www/client; # Path to the client directory
+        index index.html index.htm;
+
+        location / {
+            try_files $uri /index.html;
+        }
+
+        error_page 404 /404.html;
+        location = /404.html {
+            root /var/www/client; # Path to 404 page for client
+        }
+    }
+}

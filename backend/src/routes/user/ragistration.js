@@ -92,7 +92,7 @@ router.post('/otp_1', (req, res) => {
   db.query(deleteSql, [phone], (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ error: 'Database error 1' });
+      return res.status(500).json({ error: 'Database error 1. DELETE FROM `Otp`  ' });
     }
 
     // Insert the new OTP with expiration time
@@ -100,7 +100,7 @@ router.post('/otp_1', (req, res) => {
     db.query(insertSql, [phone, otp, User_id, expiry], (err, result) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ error: 'Database error 2' });
+        return res.status(500).json({ error: 'Database error 2 INSERT INTO `Otp`' });
       }
 
       res.json({ message: 'OTP generated successfully', otp, User_id });

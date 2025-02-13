@@ -91,12 +91,8 @@ router.get("/user/details/:userId", async (req, res) => {
         // Return the user details
         res.json(results[0]);
 
-        // Close the connection
-        db.end((endErr) => {
-          if (endErr) {
-            console.error("Error closing connection:", endErr);
-          }
-        });
+
+      
       });
     });
   } catch (error) {

@@ -40,10 +40,10 @@ app.use('/images', express.static(path.join(__dirname, '../uploads')));
 
 
 // Middleware
-app.use(cors({ origin: '*', credentials: true }));
-/*
+//app.use(cors({ origin: '*', credentials: true }));
+
 const allowedOrigins = [
-   "*",
+  "https://ladli.netlify.app/",
   'http://localhost:5173', 
   'http://localhost:5174', 
   'http://localhost:7700',
@@ -69,7 +69,7 @@ app.use(cors({
   credentials: true
 }));
 
-*/
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());

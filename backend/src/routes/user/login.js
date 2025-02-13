@@ -101,7 +101,7 @@ const SECRET_KEY = config.userjwtkey; // R
     
       const isProduction = config.deploy === 'deploy';
 
-    res.cookie(config.userAuthToken, token, {
+  res.cookie(config.userAuthToken, token, {
   path: '/',
   httpOnly: isProduction, // Set to true in production
   secure: isProduction, // Only enable secure in production

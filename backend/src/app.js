@@ -43,7 +43,7 @@ app.use('/images', express.static(path.join(__dirname, '../uploads')));
 //app.use(cors({ origin: '*', credentials: true }));
 
 const allowedOrigins = [
-  "https://ladli.netlify.app/",
+  "https://ladli.netlify.app",
   'http://localhost:5173', 
   'http://localhost:5174', 
   'http://localhost:7700',

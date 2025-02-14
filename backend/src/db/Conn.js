@@ -3,36 +3,28 @@ const config = require('../config/env');
 
 const isProduction = config.deploy === 'deploy';
 
-let db;
 
-function handleDisconnect() {
-  db = mysql.createConnection({
-    host: !isProduction ? "127.0.0.1" : config.host,
-    user: !isProduction ? "root" : config.user,
-    password: !isProduction ? "root" : config.password,
-    database: !isProduction ? "org" : config.database,
-  });
 
-  db.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL:', err);
-      setTimeout(handleDisconnect, 2000); // Retry after 2 seconds
-    } else {
-      console.log('Connected to MySQL database');
-    }
-  });
+const db = mysql.createConnection({
+  host: !isProduction ? "127.0.0.1" : config.host, // Replace with your MySQL host
+  user: !isProduction ? "root" : config.user, // Replace with your MySQL username
+  password: !isProduction ? "root" : config.password, // Replace with your MySQL password
+  database: !isProduction ? "Org" : config.database, // Replace with your MySQL database name
+});
 
-  db.on('error', (err) => {
-    console.error('MySQL error:', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.log('MySQL connection lost. Reconnecting...');
-      handleDisconnect();
-    } else {
-      throw err;
-    }
-  });
-}
 
-handleDisconnect();
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err);
+    return;
+  }
+  console.log('Connected to MySQL database');
+});
+
 
 module.exports = db;
+
+
+
+
+//{ "error": "Can't add new command when connection is in closed state" }
